@@ -1,0 +1,48 @@
+<html>
+  <head>
+    <title>bookList page title</title>
+    <link rel="stylesheet" th:href="@{/style/style.css}"></link>
+  </head>
+
+  <body>
+    <h2>bookList title</h2>
+    <div th:unless="${#lists.isEmpty(bookList)}">
+      <dl th:each="book : ${bookList}">
+        <dt class="bookHeadline">
+          <span th:text="${book.booktitle}">booktitle</span> by
+          <span th:text="${book.writer}">writer</span>
+          <!--<span th:text="${book.reader}">reader</span>-->
+          (price: <span th:text="${book.price}">price</span>)
+        </dt>
+        <dd class="bookDescription">
+          <span th:if="${book.des}"
+                th:text="${book.des}">Description</span>
+          <span th:if="${book.des eq null}">
+                No des available</span>
+        </dd>
+      </dl>
+    </div>
+    <div th:if="${#lists.isEmpty(bookList)}">
+      <p>You have no books in your book list</p>
+    </div>
+
+    
+    <hr/>
+    
+    <h3>Add a book</h3>
+    <form method="POST">
+      <label for="booktitle">booktitle:</label>
+        <input type="text" name="booktitle" size="50"/><br/>
+      <!--<label for="reader">reader:</label>
+        <input type="text" name="reader" size="50"/><br/>-->
+      <label for="writer">writer:</label>
+        <input type="text" name="writer" size="50"/><br/>
+      <label for="price">price:</label>
+        <input type="text" name="price" size="15"/><br/>
+      <label for="des">des:</label><br/>
+        <textarea name="des" cols="80" rows="5"></textarea><br/>
+      <input type="submit"/>
+    </form>
+    
+  </body>
+</html>
