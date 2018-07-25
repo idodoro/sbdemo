@@ -30,10 +30,11 @@ public class BookController {
         return "bookList";
     }
 
-    @PostMapping("/{reader}")
+    @PostMapping("/book/{reader}")
     public String setWriter(@PathVariable String reader, Book book){
-        book.setReader(reader);
+//        book.setReader(reader);
         readingListRepository.save(book);
-        return "redirect:/book/{reader}";
+        return "redirect:/book/"+book.getReader();
+//        return "redirect:/book/{reader}";//单元测试无法识别{reader}
     }
 }

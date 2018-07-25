@@ -2,6 +2,7 @@ package com.example.read.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 /**
@@ -10,7 +11,7 @@ import javax.persistence.Id;
 @Entity
 public class Book {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)//单元测试无法使用auto
     private Long id;
 
     private String booktitle;
