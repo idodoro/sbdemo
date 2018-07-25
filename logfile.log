@@ -1,0 +1,27 @@
+2018-07-23 14:36:29.970 DEBUG 4812 --- [main] edFilterInvocationSecurityMetadataSource : Adding web access control expression 'hasRole('ROLE_Reader')', for Ant [pattern='/']
+2018-07-23 14:36:29.970 DEBUG 4812 --- [main] edFilterInvocationSecurityMetadataSource : Adding web access control expression 'permitAll', for Ant [pattern='/**']
+2018-07-23 14:36:29.970 DEBUG 4812 --- [main] o.s.s.w.a.i.FilterSecurityInterceptor    : Validated configuration attributes
+2018-07-23 14:36:29.970 DEBUG 4812 --- [main] o.s.s.w.a.i.FilterSecurityInterceptor    : Validated configuration attributes
+2018-07-23 14:36:29.986  INFO 4812 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Creating filter chain: org.springframework.security.web.util.matcher.AnyRequestMatcher@1, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@7bb25046, org.springframework.security.web.context.SecurityContextPersistenceFilter@17ec5e2a, org.springframework.security.web.header.HeaderWriterFilter@173cfb01, org.springframework.security.web.csrf.CsrfFilter@13d10057, org.springframework.security.web.authentication.logout.LogoutFilter@2210e466, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@5c9e3d01, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@6c2dd88b, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@47fca3cc, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@69b1e8f8, org.springframework.security.web.session.SessionManagementFilter@5bccaedb, org.springframework.security.web.access.ExceptionTranslationFilter@14ad42, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@13137835]
+2018-07-23 14:36:30.267  WARN 4812 --- [main] aWebConfiguration$JpaWebMvcConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2018-07-23 15:00:01.264 ERROR 6484 --- [main] com.zaxxer.hikari.HikariConfig           : Failed to load driver class com.mysql.jdbc.Driver from HikariConfig class classloader sun.misc.Launcher$AppClassLoader@18b4aac2
+2018-07-23 15:00:01.280  WARN 6484 --- [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaConfiguration': Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'dataSource' defined in class path resource [org/springframework/boot/autoconfigure/jdbc/DataSourceConfiguration$Hikari.class]: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [com.zaxxer.hikari.HikariDataSource]: Factory method 'dataSource' threw exception; nested exception is org.springframework.boot.context.properties.bind.BindException: Failed to bind properties under '' to com.zaxxer.hikari.HikariDataSource
+2018-07-23 15:00:01.280 ERROR 6484 --- [main] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Failed to bind properties under '' to com.zaxxer.hikari.HikariDataSource:
+
+    Property: driverclassname
+    Value: com.mysql.jdbc.Driver
+    Origin: "driverClassName" from property source "source"
+    Reason: Failed to load driver class com.mysql.jdbc.Driver in either of HikariConfig class loader or Thread context classloader
+
+Action:
+
+Update your application's configuration
+
