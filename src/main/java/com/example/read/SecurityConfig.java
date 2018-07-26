@@ -1,6 +1,7 @@
 package com.example.read;
 
 import com.example.read.dao.ReaderRepository;
+import com.example.read.entity.Reader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -10,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 
 /**
  * Created by lenovo on 2018/7/20.
@@ -19,11 +21,12 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
     @Autowired
+    @SuppressWarnings("SpringJavaAutowiringInspection")
     private ReaderRepository readerRepository;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable();
+//        http.csrf().disable();
         http.authorizeRequests()
                 .antMatchers("/").hasRole("Reader")
                 .antMatchers("/**").permitAll()
@@ -35,12 +38,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 //        auth.inMemoryAuthentication().withUser("11").
 //                password(PasswordEncoderFactories.createDelegatingPasswordEncoder().encode("11")).roles("READER");
+//        auth.inMemoryAuthentication().withUser("11").
+//                password(NoOpPasswordEncoder.getInstance().matches("11")).roles("READER");
         auth.userDetailsService(new UserDetailsService() {
             @Override
             public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-//                auth.userDetailsService();
-                return readerRepository.findById(username).orElse(null);
-//                return readerRepository.findOne(username);
+                Reader reader = readerRepository.findById(username).orElse(null);
+//                return readerRepository.findOne(username);      //springboot1.3.0可用
+                String encodedPWD = NoOpPasswordEncoder.getInstance().encode("11");
+                if(NoOpPasswordEncoder.getInstance().matches("11",encodedPWD)){
+                    return reader;
+                }
+                return null;
             }
         });
     }

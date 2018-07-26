@@ -30,6 +30,12 @@ public class BookController {
         return "bookList";
     }
 
+
+    @GetMapping("/focus")
+    public String getByWriter(Model model){
+        return "focus";
+    }
+
     @PostMapping("/book/{reader}")
     public String setWriter(@PathVariable String reader, Book book){
 //        book.setReader(reader);
