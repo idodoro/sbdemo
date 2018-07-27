@@ -1,7 +1,8 @@
-package com.example.read;
+package com.example.read.cfg;
 
 import com.example.read.dao.ReaderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -24,6 +25,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        http.requestMatcher(EndpointRequest.toAnyEndpoint()).authorizeRequests()
+                .anyRequest().permitAll();
 //        http.csrf().disable();
         http.authorizeRequests()
                 .antMatchers("/").hasRole("READER")
@@ -51,6 +54,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
             }
         });
     }
+
+
 
 
 

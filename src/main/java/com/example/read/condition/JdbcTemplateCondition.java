@@ -1,4 +1,4 @@
-package com.example.read;
+package com.example.read.condition;
 
 import org.springframework.context.annotation.Condition;
 import org.springframework.context.annotation.ConditionContext;
