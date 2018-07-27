@@ -1,7 +1,6 @@
 package com.example.read;
 
 import com.example.read.dao.ReaderRepository;
-import com.example.read.entity.Reader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -11,7 +10,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 
 /**
  * Created by lenovo on 2018/7/20.
@@ -28,7 +26,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     protected void configure(HttpSecurity http) throws Exception {
 //        http.csrf().disable();
         http.authorizeRequests()
-                .antMatchers("/").hasRole("Reader")
+                .antMatchers("/").hasRole("READER")
                 .antMatchers("/**").permitAll()
                 .and().formLogin().loginPage("/login")
                 .failureUrl("/login?error=true");
@@ -43,15 +41,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         auth.userDetailsService(new UserDetailsService() {
             @Override
             public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-                Reader reader = readerRepository.findById(username).orElse(null);
+                UserDetails userDetails = readerRepository.findById(username).orElse(null);
 //                return readerRepository.findOne(username);      //springboot1.3.0可用
-                String encodedPWD = NoOpPasswordEncoder.getInstance().encode("11");
-                if(NoOpPasswordEncoder.getInstance().matches("11",encodedPWD)){
-                    return reader;
+//                String encodedPWD = NoOpPasswordEncoder.getInstance().encode("11");
+                if (userDetails != null) {
+                    return userDetails;
                 }
-                return null;
+                throw new UsernameNotFoundException("User '" + username + "' not found.");
             }
         });
     }
+
+
 
 }
