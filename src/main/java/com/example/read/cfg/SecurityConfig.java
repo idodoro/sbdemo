@@ -30,6 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 //        http.csrf().disable();
         http.authorizeRequests()
                 .antMatchers("/").hasRole("READER")
+                .antMatchers("/actuatordemo/shutdown").hasRole("ADMIN")
                 .antMatchers("/**").permitAll()
                 .and().formLogin().loginPage("/login")
                 .failureUrl("/login?error=true");
@@ -52,7 +53,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 }
                 throw new UsernameNotFoundException("User '" + username + "' not found.");
             }
-        });
+        }).and().inMemoryAuthentication().withUser("admin").password("admin").roles("ADMIN","READER");
     }
 
 
